@@ -1,3 +1,8 @@
+# Python
+backend/venv/
+__pycache__/
+*.py[cod]
+
 # Environment
 .env
 .env.local

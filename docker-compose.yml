@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: codemind-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: codemind
+      POSTGRES_USER: codemind
+      POSTGRES_PASSWORD: codemind_dev_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
