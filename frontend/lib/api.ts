@@ -74,3 +74,49 @@ export async function createProject(
 
   return data;
 }
+
+
+
+export interface AskRequest {
+  question: string;
+}
+
+export interface Source {
+  file: string;
+  language: string | null;
+  start_line: number;
+  end_line: number;
+  distance: number;
+}
+
+export interface AskResponse {
+  answer: string;
+  sources: Source[];
+}
+
+export async function askRepository(
+  repositoryId: number,
+  question: string,
+): Promise<AskResponse> {
+  const token = localStorage.getItem("access_token");
+
+  const response = await fetch(
+    `${API_BASE_URL}/repositories/${repositoryId}/ask`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        question,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to ask repository");
+  }
+
+  return response.json();
+}
